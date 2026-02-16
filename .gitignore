@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# Raw data (do not commit)
+data/raw/
+data/raw/**
+
+# Optional: large processed files (only if needed)
+# data/processed/*.csv
