@@ -29,7 +29,11 @@ This project addresses the following question:
 ## Data Sources
 
 - **LendingClub Loan Data (Public, Anonymized)**  
-  Historical unsecured consumer loan performance data.
+  Historical unsecured consumer loan performance data.  
+  Source: Adarsh S. (Kaggle). *Lending Club Loan Data CSV*.  
+  Available at: https://www.kaggle.com/datasets/adarshsng/lending-club-loan-data-csv
+
+
 
 - **Federal Reserve Economic Data (FRED)**  
   Macroeconomic indicators including unemployment rate and CPI.
