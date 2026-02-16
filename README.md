@@ -50,6 +50,9 @@ All data used in this project is publicly available and complies with TCPS 2 eth
 
 Download the LendingClub dataset and place it at:
 
+```
+data/raw/lendingclub/loan.csv
+```
 
 ### 2️⃣ Run Notebooks in Order
 
@@ -83,6 +86,7 @@ The modeling framework includes:
 
 ## Repository Structure
 
+```
 data/
   raw/          (ignored – local only)
   processed/    (ignored – generated locally)
@@ -106,7 +110,7 @@ powerbi/
 
 report/
   final_report/
-
+```
 
 ---
 
@@ -125,6 +129,61 @@ These views are designed for integration with **Power BI dashboards**.
 
 ---
 
+## Key Results
+
+- Early default rate in test set: ~2.3%
+- Logistic Regression ROC-AUC: ~0.72 (baseline benchmark)
+- XGBoost ROC-AUC: ~0.72 (primary production model)
+- Top risk decile default rate: ~6.9%
+- Top decile lift: ~3.0x relative to portfolio average
+
+Operational scenario example:
+- Reviewing top 20% highest-risk loans captures ~47% of early defaults
+- Reviewing top 30% captures ~60% of early defaults
+
+---
+
+## Operational Interpretation
+
+The model is designed to support early intervention strategies.
+
+Instead of binary approve/deny decisions, the model enables:
+
+- Targeted review of high-risk loans
+- Early borrower outreach programs
+- Risk-adjusted pricing strategies
+- Portfolio-level monitoring
+
+Thresholds can be adjusted depending on institutional risk appetite.
+
+---
+
+## Technical Stack
+
+- Python (Pandas, NumPy, Scikit-learn, XGBoost)
+- MySQL (Analytical Views & Data Modeling)
+- Power BI (Dashboard Visualization)
+- Git & GitHub (Version Control)
+
+---
+
+## Limitations
+
+- Dataset limited to LendingClub historical portfolio
+- Kaggle version may differ from official LendingClub release
+- Macroeconomic features limited to selected indicators
+- No causal inference performed (predictive modeling only)
+
+---
+
+## Future Enhancements
+
+- Survival analysis for time-to-default modeling
+- SHAP values for advanced model interpretability
+- Fairness and bias evaluation across borrower groups
+- Real-time scoring pipeline deployment
+
+
 ## Ethics & Responsible Use
 
 This project uses anonymized secondary data and is TCPS 2 exempt.
@@ -137,6 +196,8 @@ Key considerations include:
 - Threshold-based policy decisions
 - Recall-focused risk mitigation
 - Responsible use of predictive analytics
+
+Final credit decisions should incorporate human review and institutional risk policy.
 
 ---
 
