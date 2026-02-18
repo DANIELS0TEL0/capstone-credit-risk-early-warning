@@ -36,7 +36,17 @@ This project addresses the following question:
 
 
 - **Federal Reserve Economic Data (FRED)**  
-  Macroeconomic indicators including unemployment rate and CPI.
+  Macroeconomic indicators from 2007-06-01 TO 2018-11-01, including:
+  
+  - Unemployment Rate (UNRATE)
+    https://fred.stlouisfed.org/series/UNRATE
+  
+  - Federal Funds Effective Rate (FEDFUNDS)
+    https://fred.stlouisfed.org/series/FEDFUNDS
+  
+  - Consumer Price Index for All Urban Consumers (CPIAUCSL)
+    https://fred.stlouisfed.org/series/CPIAUCSL 
+
 
 All data used in this project is publicly available and complies with TCPS 2 ethical standards.
 
@@ -48,17 +58,22 @@ All data used in this project is publicly available and complies with TCPS 2 eth
 
 ### 1️⃣ Place Raw Data
 
-Download the LendingClub dataset and place it at:
+Place LendingClub dataset at:
 
-```
-data/raw/lendingclub/loan.csv
-```
+'data/raw/lendingclub/loan.csv'
+
+Place FRED macro datasets at:
+
+'data/raw/macro/'
+  UNRATE.csv
+  FEDFUNDS.csv
+  CPIAUCSL.csv
 
 ### 2️⃣ Run Notebooks in Order
 
 1. `01_EDA.ipynb`
 2. `02_Data_Preprocessing_and_Feature_Engineering.ipynb`
-3. `03_modeling_baseline.ipynb`
+3. `03_Modeling_and_Evaluation.ipynb`
 
 This pipeline will:
 
@@ -75,12 +90,43 @@ This pipeline will:
 The modeling framework includes:
 
 - Time-based train/test split (pre-2015 vs post-2015)
-- Logistic Regression (baseline model)
-- XGBoost (gradient boosting classifier)
+- Logistic Regression (interpretable baseline)
+- XGBoost (primary nonlinear model)
 - Class imbalance handling via `scale_pos_weight`
 - ROC-AUC and PR-AUC evaluation
 - Threshold optimization for operational policy scenarios
-- Lift analysis and risk decile segmentation
+- Calibration analysis
+- Lift and risk-decile segmentation
+
+---
+
+## Final Model Selection
+
+Two modeling pipelines were evaluated:
+
+- Baseline (origination-only features)
+- Macro-augmented (origination + FRED indicators)
+
+Macroeconomic variables did not improve predictive performance for early default detection.
+
+Final selected model:
+- **XGBoost (origination features only)**
+- ROC-AUC ≈ 0.72
+- Top decile lift ≈ 3.0x
+
+---
+
+## Key Results
+
+- Early default rate in test set: ~2.3%
+- Logistic Regression ROC-AUC: ~0.72 (baseline benchmark)
+- XGBoost ROC-AUC: ~0.72 (primary production model)
+- Top risk decile default rate: ~6.9%
+- Top decile lift: ~3.0x relative to portfolio average
+
+Operational scenario example:
+- Reviewing top 20% highest-risk loans captures ~47% of early defaults
+- Reviewing top 30% captures ~60% of early defaults
 
 ---
 
@@ -129,20 +175,6 @@ These views are designed for integration with **Power BI dashboards**.
 
 ---
 
-## Key Results
-
-- Early default rate in test set: ~2.3%
-- Logistic Regression ROC-AUC: ~0.72 (baseline benchmark)
-- XGBoost ROC-AUC: ~0.72 (primary production model)
-- Top risk decile default rate: ~6.9%
-- Top decile lift: ~3.0x relative to portfolio average
-
-Operational scenario example:
-- Reviewing top 20% highest-risk loans captures ~47% of early defaults
-- Reviewing top 30% captures ~60% of early defaults
-
----
-
 ## Operational Interpretation
 
 The model is designed to support early intervention strategies.
@@ -183,6 +215,7 @@ Thresholds can be adjusted depending on institutional risk appetite.
 - Fairness and bias evaluation across borrower groups
 - Real-time scoring pipeline deployment
 
+--
 
 ## Ethics & Responsible Use
 
