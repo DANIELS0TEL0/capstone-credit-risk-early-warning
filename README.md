@@ -215,7 +215,7 @@ Thresholds can be adjusted depending on institutional risk appetite.
 - Fairness and bias evaluation across borrower groups
 - Real-time scoring pipeline deployment
 
---
+---
 
 ## Ethics & Responsible Use
 
